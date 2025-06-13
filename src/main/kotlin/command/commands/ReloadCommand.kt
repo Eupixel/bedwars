@@ -1,7 +1,8 @@
 package net.eupixel.command.commands
 
-import net.eupixel.save.Config
-import net.eupixel.util.PrefixLoader
+import core.Vivlib
+import net.eupixel.vivlib.core.DBTranslator
+import net.eupixel.vivlib.util.PrefixLoader
 import net.eupixel.vivlib.util.Permissions
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.MinecraftServer
@@ -16,13 +17,13 @@ class ReloadCommand : Command("reload") {
         setDefaultExecutor { sender, _ ->
             sender.sendMessage(MiniMessage.miniMessage().deserialize("Reloading..."))
             val ms = measureTimeMillis {
-                Config.init()
-                Config.translator.loadFromDB()
+                DBTranslator.loadFromDB()
                 Permissions.refreshAll()
                 MinecraftServer.getConnectionManager().onlinePlayers.forEach {
                     it.refreshCommands()
                     PrefixLoader.loadPrefix(it)
                 }
+                Vivlib.reload()
             }
             val formatted = String.format(Locale.US, "%.2f", ms / 1000.0)
             sender.sendMessage(MiniMessage.miniMessage().deserialize("Reloaded! (in $formatted s)"))

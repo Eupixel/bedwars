@@ -1,6 +1,6 @@
 package net.eupixel.command.commands
 
-import core.Vivlib
+import net.eupixel.vivlib.core.Vivlib
 import net.eupixel.vivlib.core.DBTranslator
 import net.eupixel.vivlib.util.PrefixLoader
 import net.eupixel.vivlib.util.Permissions
